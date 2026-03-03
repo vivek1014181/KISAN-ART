@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chord Racer</title>
+<style>
+  body { margin: 0; overflow: hidden; background: #111; }
+  canvas { display: block; background: #222; margin: 0 auto; }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+<script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Vehicle
+let car = { x: canvas.width/2, y: canvas.height-100, size: 30, color: "cyan", speed: 0, angle: 0 };
+
+// Track (simple rectangle road)
+const road = { x: canvas.width/2 - 150, y: 0, width: 300, height: canvas.height };
+
+// Keys pressed
+let keys = {};
+
+// Event listeners for chord detection
+document.addEventListener("keydown", e => { keys[e.key.toLowerCase()] = true; });
+document.addEventListener("keyup", e => { keys[e.key.toLowerCase()] = false; });
+
+// Game loop
+function update() {
+    handleChords();
+    draw();
+    requestAnimationFrame(update);
+}
+
+// Handle chords
+function handleChords() {
+    // Basic chord movements
+    // W + A = turn left
+    if(keys["w"] && keys["a"]) {
+        car.angle -= 0.05;
+        car.speed = 4;
+    }
+    // W + D = turn right
+    else if(keys["w"] && keys["d"]) {
+        car.angle += 0.05;
+        car.speed = 4;
+    }
+    // W = forward
+    else if(keys["w"]) {
+        car.speed = 3;
+    }
+    // S = slow down / brake
+    else if(keys["s"]) {
+        car.speed = -2;
+    }
+    else {
+        car.speed *= 0.95; // friction
+    }
+
+    // Shift + W = speed boost
+    if(keys["w"] && keys["shift"]) {
+        car.speed = 6;
+    }
+
+    // Move car
+    car.x += Math.sin(car.angle) * car.speed;
+    car.y -= Math.cos(car.angle) * car.speed;
+
+    // Keep car on track
+    if(car.x < road.x + car.size/2) car.x = road.x + car.size/2;
+    if(car.x > road.x + road.width - car.size/2) car.x = road.x + road.width - car.size/2;
+    if(car.y < car.size/2) car.y = car.size/2;
+    if(car.y > canvas.height - car.size/2) car.y = canvas.height - car.size/2;
+}
+
+// Draw everything
+function draw() {
+    // Clear canvas
+    ctx.fillStyle = "#222";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // Draw road
+    ctx.fillStyle = "#555";
+    ctx.fillRect(road.x, road.y, road.width, road.height);
+
+    // Draw car
+    ctx.save();
+    ctx.translate(car.x, car.y);
+    ctx.rotate(car.angle);
+    ctx.fillStyle = car.color;
+    ctx.fillRect(-car.size/2, -car.size/2, car.size, car.size);
+    ctx.restore();
+}
+
+// Start game
+update();
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors - Show Computer Choice</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+      color: #fff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298, #4e54c8);
+      background-size: 300% 300%;
+      animation: gradientShift 10s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 40px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    button {
+      font-size: 18px;
+      margin: 10px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    #result {
+      font-size: 22px;
+      margin-top: 20px;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    #computerChoice {
+      font-size: 20px;
+      margin-top: 15px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    #score {
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px 25px;
+      border-radius: 10px;
+      font-size: 18px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    #playAgain {
+      display: none;
+      margin-top: 25px;
+      background: rgba(255, 255, 255, 0.4);
+      color: #000;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔥 Rock Paper Scissors 🔥</h1>
+  <p>Choose your move:</p>
+
+  <div id="buttons">
+    <button onclick="play('rock')">✊ Rock</button>
+    <button onclick="play('paper')">✋ Paper</button>
+    <button onclick="play('scissors')">✌️ Scissors</button>
+  </div>
+
+  <h2 id="result"></h2>
+  <p id="computerChoice"></p>
+
+  <div id="score">
+    Wins: <span id="wins">0</span> |
+    Losses: <span id="losses">0</span> |
+    Ties: <span id="ties">0</span>
+  </div>
+
+  <button id="playAgain" onclick="resetRound()">Play Again 🔁</button>
+
+  <script>
+    let wins = 0;
+    let losses = 0;
+    let ties = 0;
+
+    const icons = {
+      rock: "✊",
+      paper: "✋",
+      scissors: "✌️"
+    };
+
+    function play(playerChoice) {
+      const choices = ['rock', 'paper', 'scissors'];
+      const computerChoice = choices[Math.floor(Math.random() * 3)];
+      let resultText = "";
+
+      document.getElementById('computerChoice').textContent = 
+        `💻 Computer chose: ${icons[computerChoice]} ${computerChoice}`;
+
+      if (playerChoice === computerChoice) {
+        resultText = `It's a tie! You both chose ${playerChoice}.`;
+        ties++;
+      } else if (
+        (playerChoice === 'rock' && computerChoice === 'scissors') ||
+        (playerChoice === 'paper' && computerChoice === 'rock') ||
+        (playerChoice === 'scissors' && computerChoice === 'paper')
+      ) {
+        resultText = `🎉 You win! ${playerChoice} beats ${computerChoice}.`;
+        wins++;
+      } else {
+        resultText = `😢 You lose! ${computerChoice} beats ${playerChoice}.`;
+        losses++;
+      }
+
+      document.getElementById('result').textContent = resultText;
+      document.getElementById('wins').textContent = wins;
+      document.getElementById('losses').textContent = losses;
+      document.getElementById('ties').textContent = ties;
+
+      document.getElementById('buttons').style.display = 'none';
+      document.getElementById('playAgain').style.display = 'inline-block';
+    }
+
+    function resetRound() {
+      document.getElementById('result').textContent = "";
+      document.getElementById('computerChoice').textContent = "";
+      document.getElementById('buttons').style.display = 'block';
+      document.getElementById('playAgain').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<html>
+    <head> 
+        <title> stetment
+             that javascpcript makeing desiction </title>
+             <script> 
+                var num =0 
+                if(num>0) {
+                Document.write("the number "+ num + " is a positive number!");
+                }
+                else if (num<0) { 
+                Document.write("the number "+ num + " is a negative number!");
+                }
+                else{
+                document.write("the number "+ num + " is a equal to zero!");
+                }
+                </script>
+    </head>
+    <body> </body>
+</html>

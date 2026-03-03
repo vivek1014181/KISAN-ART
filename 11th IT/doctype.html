@@ -1,0 +1,43 @@
+<!doctype html> 
+<html> 
+	<head> 
+		<title> decision making statment js </title> 
+	<script>
+	function greet(){
+	var num1 = parseFloat(prompt("enter your first number"));
+	var num2 = parseFloat(prompt("enter your second number"));
+	var sum = num1 + num2 
+	document.write("<h1>sum is </h1>" + sum);
+
+	}
+	function sub(){
+	var num1 = parseFloat(prompt("enter your first number"));
+	var num2 = parseFloat(prompt("enter your second number"));
+	var sub = num1 - num2 
+	document.write("<h1>sub is </h1>" + sub);
+	}
+	function mul(){
+	var num1 = parseFloat(prompt("enter your first number"));
+	var num2 = parseFloat(prompt("enter your second number"));
+	var mul = num1 * num2 
+	document.write("<h1>mul is </h1>" + mul);
+	}
+	function div(){
+	var num1 = parseFloat(prompt("enter your first number"));
+	var num2 = parseFloat(prompt("enter your second number"));
+	var div = num1 / num2 
+	document.write("<h1>div is </h1>" + div);
+	}
+
+</script> 
+</head>
+<body> 
+<h1> simple calculater </h1> 
+<hr> 
+<button onClick ="greet()"> add</button> 
+<button onClick ="sub()"> sub</button> 
+<button onClick ="mul()"> mul</button>
+<button onClick ="div()"> div</button>
+</body> 
+</html>
+
